@@ -16,4 +16,4 @@ async def on_message(message):
                 rank = int(resp["data"]["competitive"]["rank"])
                 print("Rank: " + str(rank))
  
-client.run('MTk4Mzc4NzU5OTMyNDc3NDQ1.CnrTwA.hcPDnXpIOxEFreMyFCt6RBRt11s')
+client.run('MjA3Mjk0MzM0NDUyNjI5NTA1.CnrVhg.7LytKiF4y3LjL_6h07rmQD820p4')
