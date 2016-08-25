@@ -46,9 +46,9 @@ async def on_message(message):
     if message.content.startswith('!info'):
         await client.send_message(message.channel,"More about me coming soon. \nEvan Hirsh is my dad\nhttp://www.twitter.com/evanextreme")
     elif message.content.startswith('!help'):
-        print(str(message.author.name))
+        author = message.author
         await client.start_private_message(message.author)
-        await client.send_message("```Hi! I'm RITchie, the RIT eSports bot! I'm currently just a beta, but eventually I will be able to track statistics for a bunch of great games! If my status light is yellow, that means I might not be functioning properly at the moment. If you want to provide feedback, make sure to message @evanextreme#9684, i'm just a bot! \n\nCurrent commands & status:\n\nStats:\n\n✔️ Heroes of the Storm: !hots battlenet#1234\n✔️ Overwatch:           !ow [stats|heroes] [qp|comp|hero name (for heroes option only)] battlenet#1234\n❌ Rocket League:       Estimated up by Friday\n\nOther:\n\n✔️ Help:                !help\n✔️ Info:                !info```")
+        await client.send_message(author,"```Hi! I'm RITchie, the RIT eSports bot! I'm currently just a beta, but eventually I will be able to track statistics for a bunch of great games! If my status light is yellow, that means I might not be functioning properly at the moment. If you want to provide feedback, make sure to message @evanextreme#9684, i'm just a bot! \n\nCurrent commands & status:\n\nStats:\n\n✔️ Heroes of the Storm: !hots battlenet#1234\n✔️ Overwatch:           !ow [stats|heroes] [qp|comp|hero name (for heroes option only)] battlenet#1234\n❌ Rocket League:       Estimated up by Friday\n\nOther:\n\n✔️ Help:                !help\n✔️ Info:                !info```")
         print_status('GOOD',str('Command ' + message.content + ' completed'))
     elif message.content.startswith('!ow'):
         try:
