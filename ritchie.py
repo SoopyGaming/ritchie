@@ -39,9 +39,14 @@ client = discord.Client()
 
 @client.event
 async def on_message(message):
+<<<<<<< HEAD
     print(str(message))
     if message.content.startswith('!'):
         print_status('USER',str(("Command issued test '") + str(message.content) + "' by user: " + str(message.author.name) +" in " + str(message.server) + " #" + str(message.channel)))
+=======
+
+    if message.content.startswith('!'):
+        print_status('USER',str(("Command issued '") + str(message.content) + "' by user: " + str(message.author.name) +" in " + str(message.server) + " #" + str(message.channel)))
     
     if message.content.startswith('!info'):
         await client.send_message(message.channel,"More about me coming soon. \nEvan Hirsh is my dad\nhttp://www.twitter.com/evanextreme")
