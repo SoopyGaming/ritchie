@@ -17,3 +17,17 @@ Games RITchie will soon be able to track (in order of development priority)
 Other features that will be added:
 * Random match startup (picks maps/sides)
 * Tournament mode (team building & automatic role/channel creation)
+
+---
+#### How to Install
+
+##### Hosted Version:
+Adding RITchie to your server is easy as cake. Just click the link below and select the server to add it to.
+
+##### Self Hosted Version:
+Want to mess around a bit more, or add your own branding to the bot? Use the following code below.
+```
+git clone http://www.github.com/evanextreme/ritchie.git
+python ritchie.py discord_bot_token
+```
+Depending on what versions of Python are installed, you might need to replace `python` for `python3`
