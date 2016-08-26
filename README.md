@@ -1,5 +1,5 @@
 # RITchie
-
+---
 ## RITchie is a stat tracking bot for the RIT eSports Discord server.
 
 #### Games RITchie currently tracks
@@ -19,12 +19,14 @@
 * Tournament mode (team building & automatic role/channel creation)
 
 ---
-#### How to Install
+## How to Install
 
-##### Hosted Version:
-Adding RITchie to your server is easy as cake. Just click the link below and select the server to add it to.
+#### Hosted Version:
+Adding RITchie to your server is easy as cake, just click the link below.
 
-##### Self Hosted Version:
+[Add RITchie to your Discord server](https://discordapp.com/oauth2/authorize?client_id=207294266681196544&scope=bot&permissions=0)
+
+#### Self Hosted Version:
 Want to mess around a bit more, or add your own branding to the bot? Use the following code below.
 ```
 git clone http://www.github.com/evanextreme/ritchie.git
