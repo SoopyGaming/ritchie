@@ -39,10 +39,6 @@ def print_status(status,message):
     
 
 client = discord.Client()
-threads = []
-parser = argparse.ArgumentParser(description='Run the RITchie Discord bot')
-parser.add_argument('token', metavar='token', type=str, nargs='+', help='The Discord API token for the bot you wish to log in as')
-args = parser.parse_args()
 
 @client.event
 async def on_message(message):
@@ -52,7 +48,7 @@ async def on_message(message):
 
     if message.content.startswith('!info'):
         await client.start_private_message(author)
-        await client.send_message(author,"More about me coming soon. \nEvan Hirsh is my dad\nhttp://www.twitter.com/evanextreme")
+        await client.send_message(author,"Hi! My name is RITchie and I am the RIT eSports Discord bot! I was made by the following people:\nEvan Hirsh (dad)\nhttp://www.twitter.com/evanextreme\n\nYou can find out more about me at my GitHub repository:\nhttp://www.github.com/evanextreme/ritchie")
     elif message.content.startswith('!help'):
         author = message.author
         await client.start_private_message(author)
@@ -114,38 +110,24 @@ async def on_message(message):
                 except Exception as e:
                     await client.send_message(message.channel,"Looks like @evanextreme messed up somehow. Tell him you got a {}".format(type(e).__name__, e.args))
                     print_status('FAIL',str("An exception of type {0} occured. Arguments:\n{1!r}".format(type(e).__name__, e.args)))
-    
-def console():
-    while(True):
-        query = input('')
-        print(query + ' test')
-        if ('status' == query[:6]):
-            try:
-                null, game, status = query.split()
-                changeStatus(game,bool(status))
-                print_status('GOOD',str('Console command: ' + null + ' successful.'))
-                raise Exception()
-            except Exception as e:
-                print_status('FAIL',str('Exception occured: ' + type(e).__name__ + '. Program has failed to start.'))
-                print_status('DATA',str(e.args))
-        else:
-            print_status('WARN','Command not found')
 
 @client.event
 async def on_ready():
     try:
-        print_status('GOOD','Client logged in as RITchie.')
-        await client.change_status(game=discord.Game(name='!help'),idle=False)    
+        if client.is_logged_in:
+            print_status('GOOD','Client logged in to Discord as ' + client.user.name + ' on the following servers')
+        print_status('DATA',None)
+        print("[ ",end="")
+        for server in client.servers:
+            print("'" + str(server) + "'", end=" ")
+        print("]")
+        await client.change_status(game=discord.Game(name='!help'),idle=False)
         print_status('GOOD','Client status changed.')
-        consoleThread = threading.Thread(target=console)
-        threads.append(consoleThread)
-        consoleThread.start()
-        print_status('GOOD','Admin console initialized.')
     except Exception as e:
         print_status('FAIL',str('Unhandled exception occured: ' + type(e).__name__ + '. Program has failed to start.'))
         print_status('DATA',str(e.args))
-        kill_server()
-       
+
+      
 @client.event
 async def on_member_join(member):
     print_status('USER','New member ' + str(member.name) + ' has joined the ' + str(member.server) + ' server')
@@ -153,8 +135,9 @@ async def on_member_join(member):
 @client.event
 async def on_server_join(server):
     print_status('SERVER','RITchie has been added to the server ' + server.name)
+
 @client.event
 async def on_server_remove(server):
     print_status('SERVER','RITchie has been removed from the server ' + server.name)
 
-client.run(args[0])
+client.run(sys.argv[1])
