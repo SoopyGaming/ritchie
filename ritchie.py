@@ -2,6 +2,9 @@ import discord
 import asyncio
 import aiohttp
 import json
+import threading
+import sys
+import argparse
 #from rocket_league_api import *
 
 class bcolors:
@@ -36,6 +39,10 @@ def print_status(status,message):
     
 
 client = discord.Client()
+threads = []
+parser = argparse.ArgumentParser(description='Run the RITchie Discord bot')
+parser.add_argument('token', metavar='token', type=str, nargs='+', help='The Discord API token for the bot you wish to log in as')
+args = parser.parse_args()
 
 @client.event
 async def on_message(message):
@@ -108,28 +115,40 @@ async def on_message(message):
                     await client.send_message(message.channel,"Looks like @evanextreme messed up somehow. Tell him you got a {}".format(type(e).__name__, e.args))
                     print_status('FAIL',str("An exception of type {0} occured. Arguments:\n{1!r}".format(type(e).__name__, e.args)))
     
-    #elif message.content.startswith('!rl'):
-        #null, steam_id = map(str, mesage.content.split())
-        #session_id = cheat_login()
-        #result = execute_commands([get_skill_leaderboard_v2('10')], session_id) # Get 1v1 leaderboard
-        #print(result)
-    elif message.content.startswith('ritchie pls help'):
-        print_status('GOOD',str('Command ' + message.content + ' completed'))
-        await client.send_message(message.channel,'There is no help you you now, {0}'.format(message.author))
+def console():
+    while(True):
+        query = input('')
+        print(query + ' test')
+        if ('status' == query[:6]):
+            try:
+                null, game, status = query.split()
+                changeStatus(game,bool(status))
+                print_status('GOOD',str('Console command: ' + null + ' successful.'))
+                raise Exception()
+            except Exception as e:
+                print_status('FAIL',str('Exception occured: ' + type(e).__name__ + '. Program has failed to start.'))
+                print_status('DATA',str(e.args))
+        else:
+            print_status('WARN','Command not found')
 
 @client.event
 async def on_ready():
     try:
-        print_status('GOOD','Client logged in as RITchie. Changing status...')
+        print_status('GOOD','Client logged in as RITchie.')
         await client.change_status(game=discord.Game(name='!help'),idle=False)    
-        print_status('GOOD','Client status changed. RITchie is ready.')
+        print_status('GOOD','Client status changed.')
+        consoleThread = threading.Thread(target=console)
+        threads.append(consoleThread)
+        consoleThread.start()
+        print_status('GOOD','Admin console initialized.')
     except Exception as e:
-        print_status(False)
-        print(e)
-
+        print_status('FAIL',str('Unhandled exception occured: ' + type(e).__name__ + '. Program has failed to start.'))
+        print_status('DATA',str(e.args))
+        kill_server()
+       
 @client.event
 async def on_member_join(member):
-    print_status('USER','New member ' + str(member.name) + ' has joined the ' + str(discord.Member.server) + ' server')
+    print_status('USER','New member ' + str(member.name) + ' has joined the ' + str(member.server) + ' server')
 
 @client.event
 async def on_server_join(server):
@@ -138,4 +157,4 @@ async def on_server_join(server):
 async def on_server_remove(server):
     print_status('SERVER','RITchie has been removed from the server ' + server.name)
 
-client.run('MjA3Mjk0MzM0NDUyNjI5NTA1.CnrVhg.7LytKiF4y3LjL_6h07rmQD820p4')
+client.run(args[0])
