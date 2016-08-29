@@ -27,7 +27,7 @@ Adding RITchie to your server is easy as cake, just click the link below.
 [Add RITchie to your Discord server](https://discordapp.com/oauth2/authorize?client_id=207294266681196544&scope=bot&permissions=0)
 
 #### Self Hosted Version:
-Want to mess around a bit more, or add your own branding to the bot? Use the following code below.
+Want to mess around a bit more, or add your own branding to the bot? Instructions are below.
 ```
 $ git clone http://www.github.com/evanextreme/ritchie.git
 $ cd ritchie
