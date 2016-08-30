@@ -28,10 +28,14 @@ Adding RITchie to your server is easy as cake, just click the link below.
 
 #### Self Hosted Version:
 Want to mess around a bit more, or add your own branding to the bot? Instructions are below.
+######Install
 ```
 $ git clone http://www.github.com/evanextreme/ritchie.git
 $ cd ritchie
 $ pip install discord.py
+```
+######Run
+```
 $ python ritchie.py discord_bot_token
 ```
 Depending on what versions of Python are installed, you might need to replace `python` for `python3`
