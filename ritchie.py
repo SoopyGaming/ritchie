@@ -124,6 +124,7 @@ async def on_message(message):
                 except Exception as e:
                     await client.send_message(message.channel,"Looks like @evanextreme messed up somehow. Tell him you got a {}".format(type(e).__name__, e.args))
                     print_status('FAIL',str("An exception of type {0} occured. Arguments:\n{1!r}".format(type(e).__name__, e.args)))
+
 @client.event
 async def on_ready():
     try:
