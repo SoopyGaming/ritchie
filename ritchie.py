@@ -5,7 +5,7 @@ import json
 import threading
 import sys
 import argparse
-#from rocket_league_api import *
+import datetime
 
 class bcolors:
     DEFAULT = '\033[0m'
@@ -37,7 +37,7 @@ def print_status(status,message):
     if(message != None):
         print(message)
     
-
+start_time = datetime.datetime.now()
 client = discord.Client()
 
 @client.event
@@ -50,10 +50,24 @@ async def on_message(message):
         await client.start_private_message(author)
         await client.send_message(author,"Hi! My name is RITchie and I am the RIT eSports Discord bot! I was made by the following people:\nEvan Hirsh (dad)\nhttp://www.twitter.com/evanextreme\n\nYou can find out more about me at my GitHub repository:\nhttp://www.github.com/evanextreme/ritchie")
     elif message.content.startswith('!help'):
-        author = message.author
         await client.start_private_message(author)
-        await client.send_message(author,"```Hi! I'm RITchie, the RIT eSports bot! I'm currently just a beta, but eventually I will be able to track statistics for a bunch of great games! If my status light is yellow, that means I might not be functioning properly at the moment. If you want to provide feedback, make sure to message @evanextreme#9684, i'm just a bot! \n\nCurrent commands & status:\n\nStats:\n\n✔️ Heroes of the Storm: !hots battlenet#1234\n✔️ Overwatch:           !ow [stats|heroes] [qp|comp|hero name (for heroes option only)] battlenet#1234\n❌ Rocket League:       Estimated up by Friday\n\nOther:\n\n✔️ Help:                !help\n✔️ Info:                !info```")
+        await client.send_message(author,"```Hi! I'm RITchie, the RIT eSports bot! I'm currently just a beta, but eventually I will be able to track statistics for a bunch of great games! If my status light is yellow, that means I might not be functioning properly at the moment. If you want to provide feedback, make sure to message @evanextreme#9684, i'm just a bot! \n\nCurrent commands & status:\n\nStats:\n\n✔️ Heroes of the Storm: !hots battlenet#1234\n✔️ Overwatch:           !ow [stats|heroes] [qp|comp|hero name (for heroes option only)] battlenet#1234\n❌ Rocket League:       soon™\n\nOther:\n\n✔️ Help:                !help\n✔️ Info:                !info\n✔️ Uptime:              !uptime```")
         print_status('GOOD',str('Command ' + message.content + ' completed'))
+
+    elif message.content.startswith('!uptime'):
+        def timedelta_str(dt):
+            days = dt.days
+            hours, r = divmod(dt.seconds, 3600)
+            minutes, _ = divmod(r, 60)
+            if minutes == 1:
+                return '{0} days, {1} hours and {2} minute'.format(days, hours, minutes)
+            else:
+                return '{0} days, {1} hours and {2} minutes'.format(days, hours, minutes)
+        await client.start_private_message(author)
+        await client.send_message(author, timedelta_str(datetime.datetime.now() - start_time))
+        print_status('DATA',str(timedelta_str(datetime.datetime.now() - start_time)))
+        print_status('GOOD',str('Command ' + message.content + ' completed'))
+
     elif message.content.startswith('!ow'):
         try:
             null, stat, mode, battletag = map(str, message.content.split())
@@ -123,6 +137,7 @@ async def on_ready():
         print("]")
         await client.change_status(game=discord.Game(name='!help'),idle=False)
         print_status('GOOD','Client status changed.')
+
     except Exception as e:
         print_status('FAIL',str('Unhandled exception occured: ' + type(e).__name__ + '. Program has failed to start.'))
         print_status('DATA',str(e.args))
