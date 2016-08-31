@@ -44,7 +44,7 @@ client = discord.Client()
 async def on_message(message):
     author = message.author
     if message.content.startswith('!'):
-        print_status('USER',str(("Command issued test '") + str(message.content) + "' by user: " + str(message.author.name) +" in " + str(message.server) + " #" + str(message.channel)))
+        print_status('USER',str(("Command issued '") + str(message.content) + "' by user: " + str(message.author.name) +" in " + str(message.server) + " #" + str(message.channel)))
 
     if message.content.startswith('!info'):
         await client.start_private_message(author)
